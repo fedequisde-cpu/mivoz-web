@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Voz — App CAA gratuita para niños con autismo</title>
+<meta name="description" content="App de Comunicación Aumentativa y Alternativa 100% gratuita para familias con niños con autismo. Sin anuncios, sin suscripciones, para siempre.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #4A90D9;
+  --azul-oscuro: #1a3a5c;
+  --azul-medio: #2E6DB4;
+  --verde: #4CAF7D;
+  --amarillo: #F59E0B;
+  --fondo: #F0F6FF;
+  --blanco: #ffffff;
+  --texto: #1a2a3a;
+  --gris: #6B7B8E;
+  --gris-suave: #EEF4FB;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--blanco); color: var(--texto); overflow-x: hidden; }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #0d2137 0%, #1a3a5c 40%, #2E6DB4 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 24px 80px;
+  position: relative; overflow: hidden;
+  text-align: center;
+}
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 30%, rgba(74,144,217,0.25) 0%, transparent 60%),
+              radial-gradient(ellipse at 20% 80%, rgba(76,175,125,0.15) 0%, transparent 50%);
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50px; padding: 8px 18px;
+  font-size: .82rem; font-weight: 600; color: rgba(255,255,255,0.85);
+  margin-bottom: 28px; backdrop-filter: blur(10px);
+  animation: fadeUp .8s ease both;
+}
+.hero-estrella { font-size: 1rem; animation: spin 4s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.8rem, 8vw, 5.5rem);
+  font-weight: 900; color: var(--blanco);
+  line-height: 1.05; letter-spacing: -.02em;
+  margin-bottom: 10px;
+  animation: fadeUp .8s .1s ease both;
+}
+h1 em { font-style: italic; color: #7EC8F0; }
+
+.hero-sub {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: rgba(255,255,255,0.7); font-weight: 300;
+  max-width: 540px; line-height: 1.6;
+  margin: 0 auto 14px;
+  animation: fadeUp .8s .2s ease both;
+}
+.hero-gratis {
+  display: inline-block;
+  background: var(--verde); color: white;
+  border-radius: 50px; padding: 6px 18px;
+  font-weight: 700; font-size: .9rem;
+  margin-bottom: 36px;
+  animation: fadeUp .8s .3s ease both;
+}
+
+.hero-btns {
+  display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+  animation: fadeUp .8s .4s ease both;
+}
+.btn-principal-hero {
+  background: var(--azul); color: white; border: none;
+  border-radius: 16px; padding: 16px 32px;
+  font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1rem;
+  cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+  box-shadow: 0 8px 30px rgba(74,144,217,0.4);
+  transition: transform .2s, box-shadow .2s;
+}
+.btn-principal-hero:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(74,144,217,0.5); }
+.btn-secundario-hero {
+  background: rgba(255,255,255,0.1); color: white;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 16px; padding: 16px 32px;
+  font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 1rem;
+  cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+  backdrop-filter: blur(10px);
+  transition: background .2s, transform .2s;
+}
+.btn-secundario-hero:hover { background: rgba(255,255,255,0.18); transform: translateY(-3px); }
+
+.hero-stats {
+  display: flex; gap: 32px; margin-top: 56px; flex-wrap: wrap; justify-content: center;
+  animation: fadeUp .8s .5s ease both;
+}
+.hero-stat { text-align: center; }
+.hero-stat-num { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 900; color: white; display: block; }
+.hero-stat-lbl { font-size: .78rem; color: rgba(255,255,255,0.55); font-weight: 500; text-transform: uppercase; letter-spacing: .05em; }
+
+.hero-scroll {
+  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,0.4); font-size: .78rem; font-weight: 500;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  animation: bounce 2s ease infinite;
+}
+.hero-scroll::after { content: '↓'; font-size: 1.2rem; }
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── SECCIÓN PROBLEMA ── */
+#problema {
+  background: var(--gris-suave);
+  padding: 90px 24px;
+  text-align: center;
+}
+.sec-label {
+  font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--azul); margin-bottom: 14px; display: block;
+}
+h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700; line-height: 1.15;
+  margin-bottom: 18px; color: var(--texto);
+}
+h2 em { font-style: italic; color: var(--azul); }
+.sec-desc {
+  font-size: 1.05rem; color: var(--gris);
+  max-width: 580px; margin: 0 auto 56px; line-height: 1.7;
+}
+.barreras-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px; max-width: 960px; margin: 0 auto;
+}
+.barrera-card {
+  background: white; border-radius: 20px; padding: 28px 24px;
+  text-align: left; border: 1.5px solid #E8EEF4;
+  box-shadow: 0 4px 20px rgba(26,58,92,0.06);
+  transition: transform .2s, box-shadow .2s;
+}
+.barrera-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,58,92,0.12); }
+.barrera-ico { font-size: 2rem; margin-bottom: 14px; display: block; }
+.barrera-card h3 { font-weight: 700; font-size: 1rem; margin-bottom: 8px; color: var(--texto); }
+.barrera-card p { font-size: .88rem; color: var(--gris); line-height: 1.6; }
+.barrera-card.solucion { border-color: var(--verde); background: #F0FFF8; }
+.barrera-card.solucion h3 { color: #166534; }
+
+/* ── FUNCIONES ── */
+#funciones {
+  padding: 90px 24px;
+  background: white;
+}
+.funciones-inner { max-width: 1100px; margin: 0 auto; }
+.funciones-header { text-align: center; margin-bottom: 56px; }
+.funciones-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+.funcion-grupo {
+  background: var(--gris-suave); border-radius: 24px; overflow: hidden;
+  border: 1.5px solid #E0EAF4;
+}
+.funcion-cab {
+  padding: 18px 22px; display: flex; align-items: center; gap: 12px;
+}
+.funcion-cab-ico { font-size: 1.4rem; }
+.funcion-cab-titulo { font-weight: 700; font-size: 1rem; color: white; }
+.funcion-items { padding: 4px 0 16px; }
+.funcion-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 22px;
+}
+.funcion-item-ico { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.funcion-item-txt { font-size: .88rem; color: var(--texto); line-height: 1.5; }
+.funcion-item-txt b { font-weight: 600; }
+
+/* ── COMPARATIVA ── */
+#comparativa {
+  padding: 90px 24px;
+  background: linear-gradient(160deg, #0d2137 0%, #1a3a5c 100%);
+}
+.comparativa-inner { max-width: 900px; margin: 0 auto; }
+.comparativa-inner .sec-label { color: #7EC8F0; }
+.comparativa-inner h2 { color: white; }
+.comparativa-inner h2 em { color: #7EC8F0; }
+.comparativa-inner .sec-desc { color: rgba(255,255,255,0.6); }
+.tabla-wrap { overflow-x: auto; border-radius: 20px; }
+table { width: 100%; border-collapse: collapse; }
+thead tr { background: rgba(255,255,255,0.05); }
+th { padding: 16px 20px; font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: rgba(255,255,255,0.5); text-align: left; }
+th:last-child { color: #7EC8F0; }
+td { padding: 14px 20px; font-size: .9rem; border-top: 1px solid rgba(255,255,255,0.07); }
+td:first-child { color: rgba(255,255,255,0.8); font-weight: 500; }
+td:nth-child(2) { color: rgba(255,255,255,0.35); }
+td:last-child { color: #4CAF7D; font-weight: 700; }
+tr:hover { background: rgba(255,255,255,0.03); }
+.tabla-destacada { background: rgba(74,144,217,0.1) !important; border-left: 3px solid var(--azul); }
+
+/* ── PRIVACIDAD ── */
+#privacidad {
+  padding: 90px 24px;
+  background: var(--gris-suave);
+  text-align: center;
+}
+.privacidad-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px; max-width: 900px; margin: 0 auto;
+}
+.priv-card {
+  background: white; border-radius: 20px; padding: 28px 20px;
+  border: 1.5px solid #E0EAF4;
+  box-shadow: 0 4px 16px rgba(26,58,92,0.06);
+}
+.priv-ico { font-size: 2.2rem; margin-bottom: 12px; display: block; }
+.priv-card h3 { font-weight: 700; font-size: .95rem; margin-bottom: 8px; }
+.priv-card p { font-size: .83rem; color: var(--gris); line-height: 1.6; }
+
+/* ── ARASAAC ── */
+#arasaac {
+  padding: 70px 24px;
+  background: white;
+  text-align: center;
+  border-top: 1px solid #EEF2F7;
+}
+.arasaac-inner { max-width: 680px; margin: 0 auto; }
+.arasaac-inner p { font-size: .95rem; color: var(--gris); line-height: 1.7; margin-top: 14px; }
+.arasaac-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #EBF4FF; border: 1.5px solid #BFDBFE;
+  border-radius: 50px; padding: 10px 22px;
+  font-weight: 700; font-size: .9rem; color: var(--azul-medio);
+  margin-top: 20px;
+}
+
+/* ── CTA FINAL ── */
+#cta {
+  padding: 90px 24px;
+  background: linear-gradient(135deg, #4A90D9 0%, #2E6DB4 100%);
+  text-align: center;
+}
+#cta h2 { color: white; margin-bottom: 14px; }
+#cta h2 em { color: #BDE0FF; }
+#cta p { color: rgba(255,255,255,0.75); font-size: 1.05rem; max-width: 500px; margin: 0 auto 36px; line-height: 1.6; }
+.cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.btn-blanco {
+  background: white; color: var(--azul-medio);
+  border: none; border-radius: 16px; padding: 16px 32px;
+  font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1rem;
+  cursor: pointer; text-decoration: none;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  transition: transform .2s, box-shadow .2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-blanco:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,0.2); }
+.btn-outline-blanco {
+  background: transparent; color: white;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 16px; padding: 16px 32px;
+  font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 1rem;
+  cursor: pointer; text-decoration: none;
+  transition: background .2s, transform .2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-outline-blanco:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
+
+/* ── FOOTER ── */
+footer {
+  background: #0d2137; color: rgba(255,255,255,0.45);
+  padding: 36px 24px; text-align: center;
+  font-size: .82rem; line-height: 1.8;
+}
+footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+footer a:hover { color: white; }
+footer strong { color: rgba(255,255,255,0.7); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(13,33,55,0.85); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: background .3s;
+}
+.nav-logo { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 900; color: white; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.nav-links { display: flex; gap: 24px; align-items: center; }
+.nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: .88rem; font-weight: 500; transition: color .2s; }
+.nav-links a:hover { color: white; }
+.nav-cta {
+  background: var(--azul); color: white !important;
+  border-radius: 10px; padding: 8px 18px !important;
+  font-weight: 600 !important;
+}
+
+/* ── CARTA ── */
+#carta {
+  padding: 90px 24px;
+  background: white;
+}
+.carta-inner {
+  max-width: 680px; margin: 0 auto;
+  background: linear-gradient(135deg, #F8FAFF 0%, #EBF4FF 100%);
+  border-radius: 28px; padding: 48px 40px;
+  border: 1.5px solid #BFDBFE;
+  position: relative; overflow: hidden;
+}
+.carta-inner::before {
+  content: '"';
+  font-family: 'Fraunces', serif;
+  font-size: 14rem; font-weight: 900;
+  color: rgba(74,144,217,0.07);
+  position: absolute; top: -40px; left: 10px;
+  line-height: 1; pointer-events: none;
+}
+.carta-inner p {
+  font-size: 1rem; line-height: 1.85; color: #2C3E50;
+  margin-bottom: 18px; position: relative;
+}
+.carta-inner p:first-of-type { font-size: 1.05rem; font-weight: 500; }
+.carta-firma {
+  margin-top: 28px; padding-top: 20px;
+  border-top: 1px solid #BFDBFE;
+  font-family: 'Fraunces', serif; font-style: italic;
+  font-size: 1.1rem; color: var(--azul-medio); font-weight: 700;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  nav .nav-links { display: none; }
+  .carta-inner { padding: 32px 24px; }
+  .carta-inner::before { font-size: 8rem; }
+  .hero-stats { gap: 20px; }
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">🌟 Mi Voz</a>
+  <div class="nav-links">
+    <a href="#funciones">Funciones</a>
+    <a href="#comparativa">Comparativa</a>
+    <a href="#privacidad">Privacidad</a>
+    <a href="#carta">Nuestra historia</a>
+    <a href="https://mivoz-blond.vercel.app" class="nav-cta" target="_blank">Abrir app →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-badge"><span class="hero-estrella">🌟</span> 100% gratuita · Sin anuncios · Sin suscripciones</div>
+  <h1>La voz que<br><em>tu hijo merece</em></h1>
+  <p class="hero-sub">App de Comunicación Aumentativa y Alternativa diseñada con evidencia científica para niños con autismo. Porque comunicarse es un derecho, no un privilegio.</p>
+  <span class="hero-gratis">✓ Gratis para siempre</span>
+  <div class="hero-btns">
+    <a href="https://mivoz-blond.vercel.app" class="btn-principal-hero" target="_blank">📱 Abrir la app</a>
+    <a href="mivoz_presentacion.pdf" download class="btn-secundario-hero">📄 Descargar presentación</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="hero-stat-num">9</span><span class="hero-stat-lbl">Categorías</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">100+</span><span class="hero-stat-lbl">Botones</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-lbl">Idiomas</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">0€</span><span class="hero-stat-lbl">Siempre</span></div>
+  </div>
+  <div class="hero-scroll">Descubre más</div>
+</section>
+
+<!-- PROBLEMA -->
+<section id="problema" class="reveal">
+  <span class="sec-label">El problema</span>
+  <h2>Darle voz a tu hijo<br><em>no debería costar dinero</em></h2>
+  <p class="sec-desc">Las familias con niños con autismo se enfrentan a barreras reales cada día. Mi Voz nació para eliminarlas todas.</p>
+  <div class="barreras-grid">
+    <div class="barrera-card">
+      <span class="barrera-ico">💸</span>
+      <h3>Barrera económica</h3>
+      <p>Las apps CAA de referencia cuestan entre 200 y 300€, con suscripciones anuales adicionales. Inasequible para muchas familias.</p>
+    </div>
+    <div class="barrera-card">
+      <span class="barrera-ico">🌍</span>
+      <h3>Barrera de idioma</h3>
+      <p>La mayoría están disponibles solo en inglés, sin soporte para español, catalán o euskera.</p>
+    </div>
+    <div class="barrera-card">
+      <span class="barrera-ico">😵</span>
+      <h3>Exceso de estímulos</h3>
+      <p>Diseños complejos que generan ansiedad en niños con hipersensibilidad sensorial, en lugar de ayudarles.</p>
+    </div>
+    <div class="barrera-card">
+      <span class="barrera-ico">🔒</span>
+      <h3>Privacidad dudosa</h3>
+      <p>Muchas apps envían datos del niño a servidores externos sin transparencia ni control por parte de la familia.</p>
+    </div>
+    <div class="barrera-card solucion">
+      <span class="barrera-ico">🌟</span>
+      <h3>Mi Voz lo resuelve todo</h3>
+      <p>Gratuita, en 4 idiomas, diseñada con evidencia científica para reducir estímulos, con todos los datos en tu dispositivo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FUNCIONES -->
+<section id="funciones">
+  <div class="funciones-inner">
+    <div class="funciones-header reveal">
+      <span class="sec-label">Funciones</span>
+      <h2>Todo lo que necesitas,<br><em>sin pagar nada</em></h2>
+      <p class="sec-desc">Cada función ha sido diseñada con evidencia científica sobre cómo procesan la información los niños con TEA.</p>
+    </div>
+    <div class="funciones-grid">
+      <div class="funcion-grupo reveal">
+        <div class="funcion-cab" style="background:linear-gradient(135deg,#4A90D9,#2E6DB4);">
+          <span class="funcion-cab-ico">💬</span>
+          <span class="funcion-cab-titulo">Comunicación</span>
+        </div>
+        <div class="funcion-items">
+          <div class="funcion-item"><span class="funcion-item-ico">⭐</span><div class="funcion-item-txt"><b>Mis frases</b> — Frases completas de un solo toque</div></div>
+          <div class="funcion-item"><span class="funcion-item-ico">🖼️</span><div class="funcion-item-txt"><b>Pictogramas ARASAAC</b> — Los que usan los terapeutas</div></div>
+          <div class="funcion-item"><span class="funcion-item-ico">🎙️</span><div class="funcion-item-txt"><b>Voz personalizada</b> — Graba tu propia voz</div></div>
+          <div class="funcion-item"><span class="funcion-item-ico">📤</span><div class="funcion-item-txt"><b>Compartir</b> — Envía frases por WhatsApp</div></div>
+          <div class="funcion-item"><span class="funcion-item-ico">💙</span><div class="funcion-item-txt"><b>Modo Calma</b> — Para crisis sensoriales</div></div>
+        </div>
+      </div>
+      <div class="funcion-grupo reveal">
+        <div class="funcion-cab" style="background:linear-gradient(135deg,#C45A7A,#9D174D);">
+          <span class="funcion-cab-ico">😊</span>
+          <span class="funcion-cab-titulo">Bienestar emocional</span>
+        </div>
+        <div class="funcion-items">
+          <div class="funcion-item"><span class="funcion-item-ico">😄</span><div class="funcion-item-txt"><b>Pantalla Siento</b> — Elige cómo se siente</div></div>
+          <div class="funcion-item"><span class="funcion-item-ico">📊</span><div class="funcion-item-txt"><b>Escala de intensidad</b> — De "un poquito" a "muchísimo"</div></div>
+          <div class="funcion-item"><span class="funcion-item-ico">📋</span><div class="funcion-item-txt"><b>Historial emocional</b> — Registro para terapeutas</div></div>
+        </div>
+      </div>
+      <div class="funcion-grupo reveal">
+        <div class="funcion-cab" style="background:linear-gradient(135deg,#F59E0B,#D97706);">
+          <span class="funcion-cab-ico">📅</span>
+          <span class="funcion-cab-titulo">Rutinas y agenda</span>
+        </div>
+        <div class="funcion-items">
+          <div class="funcion-item"><span class="funcion-item-ico">📅</span><div class="funcion-item-txt"><b>Agenda visual</b> — El día organizado con emojis y horas</div></div>
+          <div class="funcion-item"><span class="funcion-item-ico">✅</span><div class="funcion-item-txt"><b>Marcar como hecho</b> — El niño ve su progreso</div></div>
+          <div class="funcion-item"><span class="funcion-item-ico">⏱️</span><div class="funcion-item-txt"><b>Temporizador visual</b> — Círculo que se vacía</div></div>
+          <div class="funcion-item"><span class="funcion-item-ico">🔔</span><div class="funcion-item-txt"><b>Notificaciones</b> — Aviso cuando llega la actividad</div></div>
+        </div>
+      </div>
+      <div class="funcion-grupo reveal">
+        <div class="funcion-cab" style="background:linear-gradient(135deg,#4CAF7D,#166534);">
+          <span class="funcion-cab-ico">👩‍⚕️</span>
+          <span class="funcion-cab-titulo">Para padres y terapeutas</span>
+        </div>
+        <div class="funcion-items">
+          <div class="funcion-item"><span class="funcion-item-ico">📊</span><div class="funcion-item-txt"><b>Estadísticas completas</b> — Palabras, emociones, actividad</div></div>
+          <div class="funcion-item"><span class="funcion-item-ico">📄</span><div class="funcion-item-txt"><b>Informe PDF</b> — Para llevar a la consulta</div></div>
+          <div class="funcion-item"><span class="funcion-item-ico">🪪</span><div class="funcion-item-txt"><b>Tarjeta de emergencia</b> — PDF para médicos</div></div>
+          <div class="funcion-item"><span class="funcion-item-ico">📸</span><div class="funcion-item-txt"><b>Fotos personales</b> — Botones con fotos reales</div></div>
+          <div class="funcion-item"><span class="funcion-item-ico">👤</span><div class="funcion-item-txt"><b>Múltiples perfiles</b> — Uno por niño</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARATIVA -->
+<section id="comparativa">
+  <div class="comparativa-inner">
+    <div style="text-align:center;margin-bottom:48px;" class="reveal">
+      <span class="sec-label">Comparativa</span>
+      <h2>Lo que tienen las apps de pago,<br><em>gratis en Mi Voz</em></h2>
+      <p class="sec-desc">Una comparativa honesta de lo que ofrece Mi Voz frente a las opciones de pago del mercado.</p>
+    </div>
+    <div class="tabla-wrap reveal">
+      <table>
+        <thead>
+          <tr>
+            <th>Característica</th>
+            <th>Apps de pago</th>
+            <th>🌟 Mi Voz</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tabla-destacada"><td>Precio</td><td>200–300€ + suscripción</td><td>Gratis para siempre</td></tr>
+          <tr><td>Pictogramas ARASAAC</td><td>No incluidos</td><td>✓ Incluidos</td></tr>
+          <tr><td>Idiomas</td><td>Inglés principalmente</td><td>✓ ES, CA, EU, PT</td></tr>
+          <tr><td>Voz personalizada</td><td>No disponible</td><td>✓ Graba tu voz</td></tr>
+          <tr><td>Agenda visual</td><td>Solo en premium</td><td>✓ Incluida</td></tr>
+          <tr><td>Informe para terapeuta</td><td>No disponible</td><td>✓ PDF descargable</td></tr>
+          <tr><td>Tarjeta de emergencia</td><td>No disponible</td><td>✓ PDF descargable</td></tr>
+          <tr><td>Modo calma para crisis</td><td>No disponible</td><td>✓ Incluido</td></tr>
+          <tr><td>Privacidad de datos</td><td>Servidor externo</td><td>✓ Solo en tu móvil</td></tr>
+          <tr><td>Instalación</td><td>Solo tiendas de apps</td><td>✓ Desde el navegador</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACIDAD -->
+<section id="privacidad" class="reveal">
+  <span class="sec-label">Privacidad</span>
+  <h2>Sin servidor.<br><em>Sin rastreo. Sin excusas.</em></h2>
+  <p class="sec-desc" style="margin-bottom:48px;">La privacidad en Mi Voz no es una política de términos que nadie lee. Es una decisión técnica.</p>
+  <div class="privacidad-grid">
+    <div class="priv-card">
+      <span class="priv-ico">📱</span>
+      <h3>Todo en tu dispositivo</h3>
+      <p>Los datos nunca salen de tu móvil. No hay servidor que los almacene.</p>
+    </div>
+    <div class="priv-card">
+      <span class="priv-ico">👁️</span>
+      <h3>Nadie tiene acceso</h3>
+      <p>Ni nosotros ni nadie puede ver los datos del niño. Son completamente privados.</p>
+    </div>
+    <div class="priv-card">
+      <span class="priv-ico">🍪</span>
+      <h3>Sin cookies</h3>
+      <p>No usamos cookies, no te rastreamos, no vendemos datos. Nunca.</p>
+    </div>
+    <div class="priv-card">
+      <span class="priv-ico">💻</span>
+      <h3>Código abierto</h3>
+      <p>El código está en GitHub para que cualquiera pueda verificar exactamente qué hace la app.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ARASAAC -->
+<section id="arasaac" class="reveal">
+  <div class="arasaac-inner">
+    <span class="sec-label">Reconocimientos</span>
+    <h2 style="font-size:1.8rem;">Pictogramas oficiales <em>ARASAAC</em></h2>
+    <p>Mi Voz integra los pictogramas del Centro Aragonés para la Comunicación Aumentativa y Alternativa del Gobierno de Aragón. Los mismos que usan los terapeutas en España cada día.</p>
+    <div class="arasaac-badge">🖼️ Pictogramas © ARASAAC – Gobierno de Aragón · Licencia CC BY-NC-SA</div>
+  </div>
+</section>
+
+<!-- CARTA -->
+<section id="carta">
+  <div style="text-align:center;margin-bottom:48px;" class="reveal">
+    <span class="sec-label">Nuestra historia</span>
+    <h2>Una carta del<br><em>Ayudante Anónimo</em></h2>
+  </div>
+  <div class="carta-inner reveal">
+    <p>No soy médico, ni terapeuta, ni investigador. Soy alguien que cree que la tecnología debería estar al servicio de las personas, y no al revés.</p>
+    <p>Cuando descubrí que las familias de niños con autismo tenían que pagar cientos de euros solo para darle voz a su hijo —algo tan básico como poder decir "tengo hambre" o "me duele"— me pareció profundamente injusto.</p>
+    <p>Así nació Mi Voz. No con grandes recursos. Con tiempo, con cuidado, con mucha lectura sobre cómo funciona la mente de estos niños maravillosos, y con el deseo genuino de que sirva de algo.</p>
+    <p>Si hay un solo niño que gracias a esto pueda decir "tengo miedo" cuando lo siente, o "quiero un abrazo" cuando lo necesita... entonces todo ha valido la pena.</p>
+    <p>A los padres que llegan aquí agotados: sois increíbles. Y a los niños que un día usen esta app para decir algo que llevaban tiempo sin poder decir: esta app es vuestra. Siempre lo fue.</p>
+    <div class="carta-firma">— Ayudante Anónimo · mivozapp.gratis@gmail.com</div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="cta">
+  <h2 class="reveal">Empieza ahora.<br><em>Es gratis. Para siempre.</em></h2>
+  <p class="reveal">Sin registros, sin descargas, sin tarjeta de crédito. Abre la app desde tu navegador y empieza a usarla hoy.</p>
+  <div class="cta-btns reveal">
+    <a href="https://mivoz-blond.vercel.app" class="btn-blanco" target="_blank">🌟 Abrir Mi Voz</a>
+    <a href="mivoz_presentacion.pdf" download class="btn-outline-blanco">📄 Descargar presentación</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="margin-bottom:10px;">
+    <strong>Mi Voz</strong> — App CAA 100% gratuita para familias con niños con autismo
+  </div>
+  <div>
+    Desarrollada por <strong>Ayudante Anónimo</strong> ·
+    <a href="mailto:mivozapp.gratis@gmail.com">mivozapp.gratis@gmail.com</a> ·
+    <a href="https://twitter.com/AyudanteAnonim0" target="_blank">@AyudanteAnonim0</a>
+  </div>
+  <div style="margin-top:8px;">
+    Pictogramas © ARASAAC – Centro Aragonés para la Comunicación Aumentativa y Alternativa – Gobierno de Aragón · Licencia CC BY-NC-SA
+  </div>
+  <div style="margin-top:8px;">
+    <a href="https://github.com/fedequisde-cpu/mivoz" target="_blank">Código abierto en GitHub</a>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
